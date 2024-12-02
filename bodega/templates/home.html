@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título de Bienvenida -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Bienvenido, {{ request.session.usuario_nombre }}</h1>
+        <p class="text-muted">Selecciona una de las opciones para administrar el sistema.</p>
+    </div>
+
+    <!-- Tarjetas según el Rol -->
+    <div class="row {% if request.session.usuario_rol == 2 %}justify-content-center{% endif %} row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% if request.session.usuario_rol == 1 %}
+        <!-- Opciones para Administrador -->
+        <!-- TARJETA LISTAR USUARIOS -->
+        <div class="col">
+            <div class="card shadow-lg h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-primary fw-bold">Gestión de Usuarios</h5>
+                    <p class="card-text text-muted">Administra los usuarios registrados en el sistema.</p>
+                    <a href="{% url 'listar_usuario' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-people"></i> Ver Usuarios
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA LISTAR DOCENTES -->
+        <div class="col">
+            <div class="card shadow-lg h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success fw-bold">Gestión de Docentes</h5>
+                    <p class="card-text text-muted">Administra los docentes registrados en el sistema.</p>
+                    <a href="{% url 'listar_docentes' %}" class="btn btn-outline-success">
+                        <i class="bi bi-person-badge"></i> Ver Docentes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA LISTAR MATERIALES -->
+        <div class="col">
+            <div class="card shadow-lg h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-warning fw-bold">Gestión de Materiales</h5>
+                    <p class="card-text text-muted">Administra los materiales registrados en el sistema.</p>
+                    <a href="{% url 'listar_materiales' %}" class="btn btn-outline-warning">
+                        <i class="bi bi-box"></i> Ver Materiales
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if request.session.usuario_rol == 2 %}
+        <!-- Opciones Exclusivas para Pañol -->
+        <!-- TARJETA GESTIONAR ASIGNACIONES -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-info fw-bold">Gestión de Asignaciones</h5>
+                    <p class="card-text text-muted">Administra las asignaciones de materiales a los docentes.</p>
+                    <a href="{% url 'listar_asignaciones' %}" class="btn btn-outline-info">
+                        <i class="bi bi-list-check"></i> Ver Asignaciones
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

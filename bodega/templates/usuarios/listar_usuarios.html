@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Lista de Usuarios</h1>
+        <p class="text-muted">Administra los usuarios registrados en el sistema.</p>
+    </div>
+
+    <!-- Botón para Crear Usuario -->
+    <div class="text-end mb-3">
+        <a href="{% url 'crear_usuario' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-person-plus"></i> Crear Usuario
+        </a>
+    </div>
+
+    <!-- Tabla de Usuarios -->
+    <div class="table-responsive shadow-lg p-3 mb-5 bg-body rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Creado</th>
+                    <th scope="col">Actualizado</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.correo }}</td>
+                    <td>{{ usuario.get_id_rol_display }}</td>
+                    <td>{{ usuario.creado|date:"d/m/Y H:i" }}</td>
+                    <td>{{ usuario.actualizado|date:"d/m/Y H:i" }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'actualizar_usuario' usuario.id %}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No hay usuarios registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Docente{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Crear Docente</h1>
+        <p class="text-muted">Completa el formulario para registrar un nuevo docente en el sistema.</p>
+    </div>
+
+    <!-- Formulario -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Campo Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingresa el nombre" required>
+                        </div>
+
+                        <!-- Campo Correo -->
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" name="correo" id="correo" class="form-control" placeholder="Ingresa el correo electrónico" required>
+                        </div>
+
+                        <!-- Campo Teléfono -->
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Ingresa el número de teléfono" required>
+                        </div>
+
+                        <!-- Campo Estado -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" name="estado" id="estado" class="form-check-input">
+                            <label for="estado" class="form-check-label">Activo</label>
+                        </div>
+
+                        <!-- Botón Guardar -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Guardar
+                            </button>
+                            <a href="{% url 'listar_docentes' %}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

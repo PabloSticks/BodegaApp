@@ -1,0 +1,180 @@
+
+/* BASE */ 
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+
+.navbar h2 {
+    font-size: 2rem;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+}
+
+/* CARTAS HOME */ 
+
+.card-title {
+    font-size: 1.25rem;
+    color: #6f42c1;
+}
+
+.card-text {
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+.btn-primary:hover {
+    background-color: #5a379e;
+    border-color: #5a379e;
+}
+
+/* FOOTER */ 
+
+   html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1; 
+}
+
+footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+}
+
+/* ----------------------- LOGIN ----------------------- */
+
+.custom-btn {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #5a359e;
+}
+
+/* LISTAR USUARIOS*/
+
+/* Ajustes para la tabla */
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Estilo para los botones */
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+/* LISTAR DOCENTES */
+
+/* Tarjetas de tablas */
+.table-hover tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Estado de los docentes */
+.badge.bg-success {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+
+.badge.bg-danger {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+
+/* Estilo para las badges de estado */
+.badge.bg-success {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+
+.badge.bg-danger {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+
+
+/* LISTAR MATERIALES */
+
+/* Hover en la tabla */
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Botón Crear Material */
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+/* Estilo de la tarjeta */
+.card {
+    border-radius: 10px;
+}
+
+/* CREAR USUARIO */
+
+/* Botón Guardar */
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+/* ELIMINAR DOCENTE */
+
+/* Botón de confirmación */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Botón de cancelar */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}

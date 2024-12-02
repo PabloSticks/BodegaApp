@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Materiales{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Lista de Materiales</h1>
+        <p class="text-muted">Administra los materiales registrados en el sistema.</p>
+    </div>
+
+    <!-- Botón para Crear Material -->
+    <div class="text-end mb-3">
+        <a href="{% url 'crear_materiales' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Crear Material
+        </a>
+    </div>
+
+    <!-- Tabla de Materiales -->
+    <div class="table-responsive shadow-lg p-3 mb-5 bg-body rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for material in materiales %}
+                <tr>
+                    <td>{{ material.nombre }}</td>
+                    <td>{{ material.modelo }}</td>
+                    <td>{{ material.stock }}</td>
+                    <td>
+                        {% if material.estado %}
+                        <span class="badge bg-success">Disponible</span>
+                        {% else %}
+                        <span class="badge bg-danger">No disponible</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'actualizar_materiales' material.id %}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_materiales' material.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No hay materiales registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

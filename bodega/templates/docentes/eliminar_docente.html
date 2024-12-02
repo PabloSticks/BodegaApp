@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center">
+        <h1 class="text-danger display-5">Confirmar Eliminación</h1>
+        <p class="text-muted">¿Estás seguro de que deseas eliminar al docente <strong>{{ docente.nombre }}</strong>?</p>
+    </div>
+
+    <!-- Formulario de Confirmación -->
+    <div class="text-center mt-4">
+        <form method="POST" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-lg">
+                <i class="bi bi-trash"></i> Sí, eliminar
+            </button>
+        </form>
+        <a href="{% url 'listar_docentes' %}" class="btn btn-secondary btn-lg">
+            <i class="bi bi-x-circle"></i> Cancelar
+        </a>
+    </div>
+</div>
+{% endblock %}
