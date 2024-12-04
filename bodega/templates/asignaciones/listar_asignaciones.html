@@ -1,27 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Asignaciones</title>
-</head>
-<body>
-    <h1>Lista de Asignaciones</h1>
-    <a href="{% url 'registrar_asignacion' %}">Registrar Nueva Asignación</a>
-    <table>
-        <tr>
-            <th>Docente</th>
-            <th>Material</th>
-            <th>Cantidad</th>
-            <th>Fecha</th>
-        </tr>
-        {% for asignacion in asignaciones %}
-        <tr>
-            <td>{{ asignacion.docente.nombre }}</td>
-            <td>{{ asignacion.material.nombre }}</td>
-            <td>{{ asignacion.cantidad }}</td>
-            <td>{{ asignacion.fecha_asignacion }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Lista de Asignaciones{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Lista de Asignaciones</h1>
+        <p class="text-muted">Consulta y administra las asignaciones realizadas a los docentes.</p>
+    </div>
+    <!-- Tabla de Asignaciones -->
+    <div class="table-responsive shadow-lg p-3 mb-5 bg-body rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Docente</th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asignacion in asignaciones %}
+                <tr>
+                    <td>{{ asignacion.docente.nombre }}</td>
+                    <td>{{ asignacion.material.nombre }}</td>
+                    <td>{{ asignacion.cantidad }}</td>
+                    <td>{{ asignacion.creado|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        {% if asignacion.estado == 'activo' %}
+                        <span class="badge bg-warning">Activo</span>
+                        {% else %}
+                        <span class="badge bg-success">Devuelto</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if asignacion.estado == 'activo' %}
+                        <a href="{% url 'devolver_asignacion' asignacion.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-arrow-counterclockwise"></i> Devolver
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No hay asignaciones registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-end mt-3">
+        <a href="{% url 'home' %}" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left-circle"></i> Volver
+        </a>
+    </div>
+</div>
+{% endblock %}

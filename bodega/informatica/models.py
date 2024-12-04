@@ -33,11 +33,14 @@ class Material(models.Model):
         return self.nombre
     
 class AsignacionMaterial(models.Model):
+    id = models.AutoField(primary_key=True)  # ID único
     docente = models.ForeignKey('Docente', on_delete=models.CASCADE, db_index=False)
     material = models.ForeignKey('Material', on_delete=models.CASCADE, db_index=False)
     cantidad = models.PositiveIntegerField()
-    fecha_asignacion = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(max_length=10, choices=[('activo', 'Activo'), ('devuelto', 'Devuelto')], default='activo')
+    creado = models.DateTimeField(auto_now_add=True)
+    actualizado = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.docente.nombre} - {self.material.nombre}"
-    
+        return f"Asignación {self.id} - Docente: {self.docente.nombre}"
+

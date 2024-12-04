@@ -56,18 +56,31 @@
 
         {% if request.session.usuario_rol == 2 %}
         <!-- Opciones Exclusivas para Pañol -->
-        <!-- TARJETA GESTIONAR ASIGNACIONES -->
-        <div class="col-md-6 col-lg-4">
+        <!-- TARJETA LISTAR ASIGNACIONES -->
+        <div class="col">
             <div class="card shadow-lg h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title text-info fw-bold">Gestión de Asignaciones</h5>
-                    <p class="card-text text-muted">Administra las asignaciones de materiales a los docentes.</p>
+                    <h5 class="card-title text-info fw-bold">Ver Asignaciones</h5>
+                    <p class="card-text text-muted">Consulta las asignaciones realizadas a los docentes.</p>
                     <a href="{% url 'listar_asignaciones' %}" class="btn btn-outline-info">
                         <i class="bi bi-list-check"></i> Ver Asignaciones
                     </a>
                 </div>
             </div>
         </div>
+
+        <!-- TARJETA REGISTRAR ASIGNACIONES -->
+        <div class="col">
+            <div class="card shadow-lg h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success fw-bold">Registrar Asignación</h5>
+                    <p class="card-text text-muted">Registra una nueva asignación de material.</p>
+                    <a href="{% url 'registrar_asignacion' %}" class="btn btn-outline-success">
+                        <i class="bi bi-plus-circle"></i> Registrar
+                    </a>
+                </div>
+            </div>
+        </div>        
         {% endif %}
     </div>
 </div>

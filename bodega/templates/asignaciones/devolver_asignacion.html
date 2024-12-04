@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Devolver Asignación{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-danger fw-bold">Devolver Asignación</h1>
+    <p class="text-center text-muted">Confirme la devolución de la asignación seleccionada.</p>
+
+    <div class="card shadow-lg mt-4">
+        <div class="card-body">
+            <h5 class="card-title text-primary">Detalles de la Asignación</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>ID Asignación:</strong> {{ asignacion.id }}</li>
+                <li class="list-group-item"><strong>Docente:</strong> {{ asignacion.docente.nombre }}</li>
+                <li class="list-group-item"><strong>Material:</strong> {{ asignacion.material.nombre }}</li>
+                <li class="list-group-item"><strong>Cantidad:</strong> {{ asignacion.cantidad }}</li>
+                <li class="list-group-item"><strong>Fecha de Asignación:</strong> {{ asignacion.creado|date:"d/m/Y H:i" }}</li>
+            </ul>
+        </div>
+        <div class="card-footer text-center">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-arrow-counterclockwise"></i> Confirmar Devolución
+                </button>
+                <a href="{% url 'listar_asignaciones' %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

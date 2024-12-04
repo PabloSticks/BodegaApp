@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Error de Stock</title>
-</head>
-<body>
-    <h1>Error</h1>
-    <p>No hay suficiente stock para completar la asignación.</p>
-    <a href="{% url 'listar_asignaciones' %}">Volver</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Error de Stock{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger text-center">
+        <h1 class="display-5 fw-bold">Error de Stock</h1>
+        <p class="text-muted">
+            No hay suficiente stock disponible para el material solicitado.
+        </p>
+        <p>
+            <strong>Material:</strong> {{ material.nombre }}<br>
+            <strong>Stock Disponible:</strong> {{ material.stock }}<br>
+            <strong>Cantidad Solicitada:</strong> {{ cantidad_solicitada }}
+        </p>
+        <a href="{% url 'registrar_asignacion' %}" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-arrow-left-circle"></i> Volver al Registro
+        </a>
+    </div>
+</div>
+{% endblock %}

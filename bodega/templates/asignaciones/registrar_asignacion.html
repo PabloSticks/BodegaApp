@@ -1,31 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar Asignación</title>
-</head>
-<body>
-    <h1>Registrar Asignación</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="docente">Docente:</label>
-        <select name="docente" id="docente" required>
-            {% for docente in docentes %}
-            <option value="{{ docente.id }}">{{ docente.nombre }}</option>
-            {% endfor %}
-        </select><br>
+{% extends 'base.html' %}
 
-        <label for="material">Material:</label>
-        <select name="material" id="material" required>
-            {% for material in materiales %}
-            <option value="{{ material.id }}">{{ material.nombre }}</option>
-            {% endfor %}
-        </select><br>
+{% block title %}Registrar Asignación{% endblock %}
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad" required><br>
+{% block content %}
+<div class="container mt-4">
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Registrar Asignación</h1>
+        <p class="text-muted">Completa el formulario para registrar una nueva asignación de material.</p>
+    </div>
 
-        <button type="submit">Registrar</button>
-    </form>
-</body>
-</html>
+    <!-- Formulario de Registro -->
+    <div class="card shadow-lg p-4">
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_docente" class="form-label">Docente:</label>
+                <select name="id_docente" id="id_docente" class="form-select" required>
+                    <option value="" disabled selected>Seleccione un docente</option>
+                    {% for docente in docentes %}
+                    <option value="{{ docente.id }}">{{ docente.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Por favor, selecciona un docente.</div>
+            </div>
+            <div class="mb-3">
+                <label for="id_material" class="form-label">Material:</label>
+                <select name="id_material" id="id_material" class="form-select" required>
+                    <option value="" disabled selected>Seleccione un material</option>
+                    {% for material in materiales %}
+                    <option value="{{ material.id }}">{{ material.nombre }} (Stock: {{ material.stock }})</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Por favor, selecciona un material.</div>
+            </div>
+            <div class="mb-3">
+                <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" class="form-control" min="1" required>
+                <div class="invalid-feedback">Por favor, ingresa una cantidad válida.</div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-check-circle"></i> Registrar
+                </button>
+                <a href="{% url 'listar_asignaciones' %}" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+    
+</div>
+{% endblock %}

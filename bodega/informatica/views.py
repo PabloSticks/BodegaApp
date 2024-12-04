@@ -62,7 +62,6 @@ def home(request):
 ## CRUD USUARIO
 
 # Crear usuario
-# Crear usuario
 @administrador_required
 def crear_usuarios(request):
     if request.method == 'POST':
@@ -136,9 +135,9 @@ def crear_docente(request):
 
 # Listar Docente 
 @administrador_required
-def listar_docentes(request):
+def listar_docente(request):
     docentes = Docente.objects.all()
-    return render(request, 'docentes/listar_docente.html', {'docentes': docentes})
+    return render(request, 'docentes/listar_docentes.html', {'docentes': docentes})
 
 # Actualizar Docente
 @administrador_required
@@ -150,8 +149,9 @@ def actualizar_docente(request, docente_id):
         docente.telefono = request.POST['telefono']
         docente.estado = request.POST.get('estado') == 'on'
         docente.save()
-        return redirect('listar_docente')
+        return redirect('listar_docentes')
     return render(request, 'docentes/actualizar_docente.html', {'docente': docente})
+
 
 # Eliminar Docente
 @administrador_required
@@ -164,7 +164,7 @@ def eliminar_docente(request, docente_id):
         return redirect('listar_docentes')
     
     # Renderiza la página de confirmación para solicitudes GET
-    return render(request, 'docentes/eliminar_docente.html', {'docente': docente})
+    return render(request, 'docentes/eliminar_docentes.html', {'docente': docente})
 
 ## CRUD para materiales
 
@@ -221,30 +221,36 @@ def eliminar_materiales(request, material_id):
 
 
 # ASIGNAR MATERIAL 
-
 @panol_required
-def registrar_asignacion(request):    
+def registrar_asignacion(request):
     if request.method == 'POST':
-        docente_id = request.POST['docente']
-        material_id = request.POST['material']
+        id_docente = request.POST['id_docente']
+        id_material = request.POST['id_material']
         cantidad = int(request.POST['cantidad'])
 
-        docente = Docente.objects.get(id=docente_id)
-        material = Material.objects.get(id=material_id)
-
-        if material.stock >= cantidad:  # Validar que hay suficiente stock
-            material.stock -= cantidad  
-            material.save()
-
-            AsignacionMaterial.objects.create(
-                docente=docente,
-                material=material,
+        # Validar el material y su stock
+        material = get_object_or_404(Material, id=id_material)
+        if material.stock >= cantidad:
+            # Crear la asignación
+            asignacion = AsignacionMaterial.objects.create(
+                docente_id=id_docente,
+                material_id=id_material,
                 cantidad=cantidad
             )
-            return redirect('listar_asignaciones')  
-        else:
-            return render(request, 'asignaciones/error_stock.html')  
+            # Actualizar el stock del material
+            material.stock -= cantidad
+            material.save()
 
+            messages.success(request, f'Asignación {asignacion.id} creada exitosamente.')
+            return redirect('listar_asignaciones')
+        else:
+            # Redirigir al HTML de error si no hay suficiente stock
+            return render(request, 'asignaciones/error_stock.html', {
+                'material': material,
+                'cantidad_solicitada': cantidad
+            })
+
+    # Obtener docentes y materiales para mostrar en el formulario
     docentes = Docente.objects.all()
     materiales = Material.objects.all()
     return render(request, 'asignaciones/registrar_asignacion.html', {
@@ -252,7 +258,28 @@ def registrar_asignacion(request):
         'materiales': materiales
     })
 
+
+@panol_required
+def devolver_asignacion(request, id_asignacion):
+    asignacion = get_object_or_404(AsignacionMaterial, id=id_asignacion, estado='activo')
+
+    if request.method == 'POST':
+        # Actualizar el stock del material
+        material = asignacion.material
+        material.stock += asignacion.cantidad
+        material.save()
+
+        # Marcar la asignación como devuelta
+        asignacion.estado = 'devuelto'
+        asignacion.save()
+
+        messages.success(request, f'La asignación {id_asignacion} fue devuelta exitosamente.')
+        return redirect('listar_asignaciones')
+
+    return render(request, 'asignaciones/devolver_asignacion.html', {'asignacion': asignacion})
+
 @panol_required
 def listar_asignaciones(request):
     asignaciones = AsignacionMaterial.objects.all()
     return render(request, 'asignaciones/listar_asignaciones.html', {'asignaciones': asignaciones})
+
